@@ -2,3 +2,8 @@ langchain
 crewai
 plotly
 openai
+crewai_tools
+langchain.chains
+langchain_openai
+langchain_community.tools.sql_database.tool
+langchain_community.utilities
