@@ -5,9 +5,9 @@ from langchain.chains import create_sql_query_chain
 from langchain_openai import ChatOpenAI
 from langchain_community.tools.sql_database.tool import QuerySQLDataBaseTool
 from langchain_community.utilities import SQLDatabase
+from dotenv import load_dotenv
+load_dotenv()
 
-
-os.environ["OPENAI_API_KEY"] = "sk-proj-nddUvPigZVnBuW8luToaT3BlbkFJ5I0iHwHL1y9ytjj6jL4t"
 os.environ["OPENAI_MODEL_NAME"] = 'gpt-4-0125-preview'
 
 
