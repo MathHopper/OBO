@@ -126,7 +126,7 @@ st.write(result)
 for i in result.split():
     
     try:
-        if float(i) < 180:    
+        if 18 < float(i) < 123:    
             coordinateArray.append(str(float(i)))  
             coordinateArrayFloat.append(float(i))
     except ValueError:
