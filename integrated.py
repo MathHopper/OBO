@@ -64,7 +64,7 @@ def mapbox():
                 lon=120,
             ),
             pitch=0,
-            zoom=0
+            zoom=5
         ),
     )
     fig.update_layout(mapbox_style="satellite")
