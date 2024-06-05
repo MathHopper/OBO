@@ -5,3 +5,4 @@ openai
 crewai_tools
 langchain_openai
 langchain_community
+pysqlite3-binary

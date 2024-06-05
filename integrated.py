@@ -1,3 +1,8 @@
+
+
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 import os 
 import streamlit as st
 from plotly import graph_objs as go
@@ -5,6 +10,8 @@ import plotly.express as px
 import numpy as np
 import pandas as pd
 from dotenv import load_dotenv
+
+import sqlite3
 load_dotenv()
 
 API_KEY = os.environ['OPENAI_API_KEY']
