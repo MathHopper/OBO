@@ -32,7 +32,7 @@ while (True):
         lonArray = coordinateArray[1::2]
         return lonArray
     
-    input_text = st.text_area(label="LLMinput", placeholder="What do you want to know?", key="input1462")
+    input_text = st.text_area(label="LLMinput", placeholder="What do you want to know?")
 
     import plotly.graph_objects as go
   
