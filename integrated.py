@@ -7,6 +7,7 @@ import pandas as pd
 from dotenv import load_dotenv
 load_dotenv()
 
+API_KEY = os.environ['OPENAI_API_KEY']
 os.environ["OPENAI_MODEL_NAME"] = 'gpt-4-0125-preview'
 
 
