@@ -1,5 +1,3 @@
-
-
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
@@ -10,13 +8,11 @@ import plotly.express as px
 import numpy as np
 import pandas as pd
 from dotenv import load_dotenv
-
 import sqlite3
 load_dotenv()
 
 #API_KEY = os.environ['OPENAI_API_KEY']
 os.environ["OPENAI_MODEL_NAME"] = 'gpt-4-0125-preview'
-
 
 
 st.set_page_config(page_title="Nestor")
@@ -78,7 +74,8 @@ from langchain_openai import ChatOpenAI
 from tools.queryDatabase import queryDatabase
 from crewai_tools import PDFSearchTool
 queryAIS = queryDatabase
-#pdfSearchTool = PDFSearchTool(pdf="/Users/david/Desktop/David/Coding_Projects/Nestor/hemingway.pdf")
+from crewai_tools import JSONSearchTool
+JSONSearchTool = JSONSearchTool(json_path='/Users/david/Desktop/David/Coding_Projects/Nestor/osint.json')
 
 from crewai import Agent
 databaseAnalyst = Agent(
@@ -93,14 +90,13 @@ OSINTresearcher = Agent(
     role='Research Analyst',
     goal='The goal is to search through pdf documents and summarize important data, with the tools at hand.',
     backstory='An expert CIA analyst with a keen eye for finding information regarding military developments in open-source intelligence.',
-    tools=[],
+    tools=[JSONSearchTool],
     llm=ChatOpenAI(model_name="gpt-4-0125-preview", temperature=1),
     allow_delegation=True
 )
 
 from crewai import Task
 translate = Task(
-    #description = ("Using the context of the question:" + query + ", the database answer:" + queryResponse + ", and memory of previous dialogue provide a verbose response in natural language that satisfies the user's question."),
     description = ("Answer the question:" + query + ", using the tools at hand provide a verbose response in natural language that satisfies the user's question.  If you provide coordinates, follow this format ( LATITUDE , LONGITUDE ), with spaces between parenthesis and commas and digits. Always leave a space after a coordinate floating number."),
     expected_output = 'insightful response, a sentence in length.'
 )
@@ -108,7 +104,7 @@ translate = Task(
 from crewai import Crew, Process
 
 crew = Crew(
-    agents = [databaseAnalyst],
+    agents = [databaseAnalyst, OSINTresearcher],
     manager_llm=ChatOpenAI(temperature=0, model="gpt-4"),
     tasks = [translate],
     process=Process.hierarchical,
@@ -131,12 +127,6 @@ for i in result.split():
             coordinateArrayFloat.append(float(i))
     except ValueError:
         pass
-    # except len(latArray) != 0:
-    #     for j in result.split():
-    #         try:
-    #             lonArray.append(str(float(j)))
-    #         except ValueError:
-    #             pass
 
 def displayMap():
     coordinatesExist = False
